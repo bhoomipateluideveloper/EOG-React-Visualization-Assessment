@@ -1,5 +1,7 @@
-## Create React App Visualization
+## EOG-React-Visualization-Assessment
 
-This assessment was bespoke handcrafted for Bhoomi Patel.
+To run this project follow these commands
 
-Read more about this assessment [here](https://react.eogresources.com)
+## yarn install
+
+## yarn start
