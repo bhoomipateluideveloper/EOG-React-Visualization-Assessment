@@ -6,5 +6,5 @@ To run this project follow these commands
 
 ## yarn start
 
-![Image description]("screenshot.png")
+![Image description](screenshot.png)
 
