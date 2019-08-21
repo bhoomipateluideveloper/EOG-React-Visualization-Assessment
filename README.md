@@ -5,3 +5,6 @@ To run this project follow these commands
 ## yarn install
 
 ## yarn start
+
+![Image description]("screenshot.png")
+
