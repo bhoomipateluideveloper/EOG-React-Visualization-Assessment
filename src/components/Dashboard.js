@@ -72,7 +72,6 @@ const Dashboard = () => {
   const { measurements } = useSelector(getMeasurements);
 
   const onSelectChange = value => {
-    console.log("onSelectChange>>", value);
     var input =
       value && value.length
         ? value.map(s => {
@@ -101,8 +100,6 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
-    console.log("mounted");
-    console.log("selectedMetrics>>", selectedMetrics);
     if (error) {
       dispatch({ type: actions.API_ERROR, error: error.message });
       return;
@@ -113,7 +110,6 @@ const Dashboard = () => {
   }, [dispatch, data, error]);
 
   useEffect(() => {
-    console.log("result2>", result2);
     if (result2.error) {
       dispatch({ type: actions.API_ERROR, error: result2.error.message });
       return;
@@ -126,15 +122,11 @@ const Dashboard = () => {
     });
   }, [result2]);
 
-  console.log("measurements>>", measurements);
-
-  // if (fetching || result2.fetching) return <LinearProgress />;
-
   return (
     <Card className={classes.card}>
       <CardContent>
         <MultipleSelect names={metrics} onSelectChange={onSelectChange} />
-        <Chart measurements={measurements}/>
+        <Chart measurements={measurements} />
       </CardContent>
     </Card>
   );

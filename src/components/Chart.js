@@ -9,80 +9,55 @@ import {
   Legend
 } from "recharts";
 import _ from "lodash";
+import moment from "moment";
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     display: "flex",
-//     flexWrap: "wrap"
-//   },
-//   formControl: {
-//     margin: theme.spacing(1),
-//     minWidth: 800,
-//     maxWidth: 800
-//   },
-//   chips: {
-//     display: "flex",
-//     flexWrap: "wrap"
-//   },
-//   chip: {
-//     margin: 2
-//   },
-//   noLabel: {
-//     marginTop: theme.spacing(3)
-//   }
-// }));
-
-// const ITEM_HEIGHT = 48;
-// const ITEM_PADDING_TOP = 8;
-// const MenuProps = {
-//   PaperProps: {
-//     style: {
-//       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-//       width: 250
-//     }
-//   }
-// };
-
-// function getStyles(name, personName, theme) {
-//   return {
-//     fontWeight:
-//       personName.indexOf(name) === -1
-//         ? theme.typography.fontWeightRegular
-//         : theme.typography.fontWeightMedium
-//   };
-// }
 const randomColor = () =>
   `#${(0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)}`;
 
 export default function Chart(props) {
-  const mergedData = _.flatten(_.map(props.measurements, "measurements"));
+  const mergedObjects = [];
 
-  const finalData = mergedData
-    .filter(m => m.value >= 0)
-    .map(m => {
-      return {
-        ...m,
-        [m.metric]: m.value
+  if (!props.measurements || !props.measurements.length)
+    return <div>Select metric to load chart data</div>;
+
+  _.forEach(props.measurements[0].measurements, function(item, index) {
+    const measurements = _.map(props.measurements, "measurements");
+
+    let mergedItem = {};
+
+    _.forEach(measurements, function(value) {
+      mergedItem = {
+        ...mergedItem,
+        ...value[index],
+        [value[index].metric]: value[index].value,
+        atValue: moment(value[index].at).format("LT")
       };
     });
+
+    mergedObjects.push(mergedItem);
+  });
+
+  const finalData = _.sortBy(mergedObjects, ["at"]).filter(m => m.value >= 0);
 
   return (
     <LineChart
       width={1024}
-      height={300}
+      height={500}
       data={finalData}
       margin={{
-        top: 5,
+        top: 50,
         right: 30,
         left: 20,
         bottom: 5
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="at" />
+      <XAxis dataKey="atValue" />
       {props.measurements.map((d, i) => (
         <YAxis yAxisId={i} key={i} />
       ))}
+      <Tooltip />
+      <Legend />
       {props.measurements.map((d, i) => (
         <Line
           yAxisId={i}
@@ -93,8 +68,6 @@ export default function Chart(props) {
           stroke={randomColor()}
         />
       ))}
-      <Tooltip />
-      <Legend />
     </LineChart>
   );
 }

@@ -1,15 +1,3 @@
-// import Avatar from "@material-ui/core/Avatar";
-// import { withStyles } from "@material-ui/core/styles";
-
-// const styles = theme => ({
-//   root: {
-//     background: theme.palette.primary.main,
-//     marginRight: "1rem"
-//   }
-// });
-// export default withStyles(styles)(Avatar);
-
-
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
@@ -52,8 +40,6 @@ const MenuProps = {
   }
 };
 
-
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
@@ -68,23 +54,10 @@ export default function MultipleSelect(props) {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
-  console.log('props.>', props);
-
   function handleChange(event) {
     setPersonName(event.target.value);
     props.onSelectChange(event.target.value);
   }
-
-  // function handleChangeMultiple(event) {
-  //   const { options } = event.target;
-  //   const value = [];
-  //   for (let i = 0, l = options.length; i < l; i += 1) {
-  //     if (options[i].selected) {
-  //       value.push(options[i].value);
-  //     }
-  //   }
-  //   setPersonName(value);
-  // }
 
   return (
     <div className={classes.root}>

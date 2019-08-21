@@ -2,7 +2,7 @@ import * as actions from "../actions";
 
 const initialState = {
   metrics: [],
-  measurements:[]
+  measurements: []
 };
 
 const metricsDataReceived = (state, action) => {
@@ -16,7 +16,6 @@ const metricsDataReceived = (state, action) => {
 
 const measurementsDataReceived = (state, action) => {
   const { getMultipleMeasurements } = action;
-console.log('state>>', state);
   return {
     ...state,
     measurements: getMultipleMeasurements
